@@ -13,14 +13,12 @@ const connectionStatus = {
 
 const App = () => {
 	const [lectura, setLectura] = React.useState({});
-	const { lastMessage, readyState } = useWebSocket('ws://alamo.local:1880/solar');
+	const { lastMessage, readyState } = useWebSocket('ws://192.168.0.10:1880/solar');
 
 	React.useEffect(() => {
 		if (lastMessage !== null) {
 			try {
 				let json = JSON.parse(lastMessage.data)
-				console.log('KVAR', json.meterPotenciaReactiva, json.potenciaReactiva)
-				console.log(json.meterFactorPotencia, json.factorPotencia)
 				setLectura(json)
 			} catch (e) {
 				console.lor(e)

@@ -9,7 +9,31 @@ import Typography from '@mui/material/Typography';
 import { green } from '@mui/material/colors';
 import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
 
-const analizarEstado = (estado) => {
+
+const ESTADOS_INVERSOR = {
+	0x0000: { texto: "Standby: Iniciando" },
+	0x0001: { texto: "Standby: Detectando IR" },
+	0x0002: { texto: "Standby: Buscando radiación" },
+	0x0003: { texto: "Standby: Esperando red" },
+	0x0100: { texto: "Arrancando" },
+	0x0200: { texto: "En línea" },
+	0x0201: { texto: "En línea: Limitado" },
+	0x0202: { texto: "En línea: Derating" },
+	0x0203: { texto: "Modo isla" },
+	0x0300: { texto: "Apagado: Error" },
+	0x0301: { texto: "Apagado: Ordenado" },
+	0x0302: { texto: "Apagado: OVGR" },
+	0x0303: { texto: "Apagado: Sin comunicación" },
+	0x0304: { texto: "Apagado: Límite" },
+}
+
+
+const estadoInversor = (dS) => {
+	return ESTADOS_INVERSOR[dS] || {texto: "Desconocido"};
+}
+
+/*
+const analizarBitmapStatus1 = (estado) => {
 	return {
 		standby							: estado & 0b1000000000000000,
 		gridConnected					: estado & 0b0100000000000000,
@@ -23,8 +47,9 @@ const analizarEstado = (estado) => {
 		spotCheck						: estado & 0b0000000001000000,
 	}
 }
-
-const analizarAlarmas = (alarma) => {
+*/
+/*
+const analizarBitmapAlarmas = (alarma) => {
 	try {
 		if (!alarma) return {}
 		let alarmas = JSON.parse(alarma);
@@ -81,15 +106,13 @@ const analizarAlarmas = (alarma) => {
 	} catch (e) {
 		console.error('ALARMA', alarma, e)
 	}
-	
 }
+*/
 
 export default React.memo(({ data }) => {
 
-	//let estado = analizarEstado(data.estado);
-	let alarmas = analizarAlarmas(data.alarma);
-
-	// console.log(data.estado);
+	let estado = estadoInversor(data.codigoEstadoInversor);
+	// let alarmas = analizarBitmapAlarmas(data.bitmapAlarmasInversor);
 	// console.log(alarmas);
 	
 	return (
@@ -112,12 +135,21 @@ export default React.memo(({ data }) => {
 						{data['potenciaGenerada']} W
 					</Typography>
 					<Typography variant="body2" component="div" color="text.secondary">
-						{data['intensidadGenerada']} A • {data['voltage']} V<br />
+						{data['intensidadGenerada']} A • {data['voltaje']} V<br />
 					</Typography>
 				</CardContent>
 				<CardContent sx={{ p: 1, py: 0 }}>
 					<Typography variant="caption" component="div" color="text.secondary">
-						{Math.round(data['potenciaReactiva'] * 100) / 100} KVAr ({Math.round(data['factorPotencia'] * 100) / 100})
+						{data['temperaturaInversor']}ºC | {estado.texto}
+					</Typography>
+				</CardContent>
+				<CardContent sx={{ p: 1, py: 0 }}>
+					<Typography variant="caption" component="div" color="text.secondary">
+					</Typography>
+				</CardContent>
+				<CardContent sx={{ p: 1, py: 0 }}>
+					<Typography variant="caption" component="div" color="text.secondary">
+						{Math.round(data['potenciaReactiva'] * 100) / 100} kVAr ({Math.round(data['factorPotencia'] * 100) / 100})
 					</Typography>
 				</CardContent>
 				<CardContent sx={{ display: 'none' }} />

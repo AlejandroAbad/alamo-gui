@@ -1,5 +1,5 @@
 import React from 'react';
-import { Handle } from 'react-flow-renderer';
+
 //MUI
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -34,7 +34,7 @@ export default React.memo(({ data }) => {
 						{icono} {valor * sentido} W
 					</Typography>
 					<Typography variant="body2" component="div" color="text.secondary">
-						{data['voltage']} V • {data['frecuencia']} Hz
+						{data['meterVoltaje']} V • {data['meterFrecuencia']} Hz
 					</Typography>
 				</CardContent>
 				<CardContent sx={{ p: 1, py: 0 }}>
