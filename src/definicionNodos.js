@@ -1,54 +1,51 @@
-import React from 'react';
 import { grey, red, green, blue, yellow } from '@mui/material/colors';
 
 
 
-export const generarNodos = ({ datos }) => {
+export const generarNodos = ({ estadoInstalacion }) => {
 
 	return [
 		{
 			id: 'solar',
 			type: 'solar',
-			data: datos,
+			data: estadoInstalacion,
 			position: { x: 10, y: 10 },
 		},
 		{
 			id: 'inversor',
 			type: 'inversor',
-			data: datos,
+			data: estadoInstalacion,
 			position: { x: 140, y: 160 }
 		},
 		{
 			id: 'consumos',
 			type: 'consumos',
-			data: datos,
+			data: estadoInstalacion,
 			position: { x: 340, y: 400 },
 		},
 
 		{
 			id: 'medidor',
 			type: 'medidor',
-			data: datos,
+			data: estadoInstalacion,
 			position: { x: 530, y: 160 },
 		},
 		{
 			id: 'grid',
 			type: 'grid',
-			data: {
-				label: (<><strong>IBERDROLA</strong></>),
-			},
+			data: estadoInstalacion,
 			position: { x: 750, y: 160 },
 		},
 	];
 }
 
 const ESTILO_ARISTA_INACTIVA = { stroke: grey[200], strokeWidth: '2' };
-export const generarAristas = ({ datos }) => {
-
-	let placasActivas = datos.potenciaPlacas > 0;
-	let inversorGenerando = datos.potenciaGenerada > 0 && datos.potenciaConsumida > 0
-	let estaExportando = datos.potenciaExportada > 0;
-	let estaImportando = datos.potenciaImportada > 0;
+export const generarAristas = ({ estadoInstalacion }) => {
+	
+	let placasActivas = estadoInstalacion.inversor.tienePlacasActivas();
+	let inversorGenerando = estadoInstalacion.inversor.estaGenerando();
+	let estaExportando = estadoInstalacion.red.estaExportando();
+	let estaImportando = estadoInstalacion.red.estaImportando();
 
 	return [
 		{

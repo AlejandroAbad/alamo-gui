@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import { blue } from '@mui/material/colors';
 import ElectricalServicesIcon from '@mui/icons-material/ElectricalServices';
 
-export default React.memo(({ data }) => {
+export default React.memo(({ data: estado }) => {
 	return (
 		<>
 			<Card variant="outlined" sx={{ px: 1, py: 0, minWidth: 175 }}>
@@ -21,7 +21,7 @@ export default React.memo(({ data }) => {
 				/>
 				<CardContent sx={{ p: 1, pt: 0 }}>
 					<Typography variant="body1" component="div" color="text.primary">
-						{data['potenciaConsumida']} W
+						{estado.consumos.potenciaConsumida} W
 					</Typography>
 				</CardContent>
 				<CardContent sx={{ display: 'none' }} />

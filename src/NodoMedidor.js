@@ -11,11 +11,11 @@ import SpeedIcon from '@mui/icons-material/Speed';
 import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
 
-export default React.memo(({ data }) => {
+export default React.memo(({ data: estado }) => {
 
-	let valor = Math.max(data['potenciaImportada'], data['potenciaExportada'])
-	let sentido = data['potenciaImportada'] ? 1 : -1;
-	let icono = data['potenciaImportada'] > 0 ?
+	let valor = Math.max(estado.red.potenciaImportada, estado.red.potenciaExportada)
+	let sentido = estado.red.potenciaImportada ? 1 : -1;
+	let icono = estado.red.potenciaImportada > 0 ?
 		<ArrowBackIosNewRoundedIcon sx={{ bgcolor: red[300], width: 12, height: 12 }} /> :
 		<ArrowForwardIosRoundedIcon sx={{ bgcolor: green[300], width: 12, height: 12 }} />;
 
@@ -34,12 +34,12 @@ export default React.memo(({ data }) => {
 						{icono} {valor * sentido} W
 					</Typography>
 					<Typography variant="body2" component="div" color="text.secondary">
-						{data['meterVoltaje']} V • {data['meterFrecuencia']} Hz
+						{estado.red.voltaje} V • {estado.red.frecuencia} Hz
 					</Typography>
 				</CardContent>
 				<CardContent sx={{ p: 1, py: 0 }}>
 					<Typography variant="caption" component="div" color="text.secondary">
-						{Math.round(data['meterPotenciaReactiva'] * 100) / 100} KVAr ({Math.round(data['meterFactorPotencia'] * 100) / 100})
+						{Math.round(estado.red.potenciaReactiva * 100) / 100} KVAr ({estado.red.factorPotencia})
 					</Typography>
 				</CardContent>
 				<CardContent sx={{ display: 'none' }} />

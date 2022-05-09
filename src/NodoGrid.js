@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import { orange } from '@mui/material/colors';
 import ElectricMeterIcon from '@mui/icons-material/ElectricMeter';
 
-export default React.memo(({ data }) => {
+export default React.memo(({ data: estado }) => {
 	return (
 		<>
 			<Card variant="outlined" sx={{ px: 1, py: 0, minWidth: 105 }}>

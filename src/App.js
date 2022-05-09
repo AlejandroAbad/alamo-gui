@@ -1,5 +1,6 @@
 import React from 'react';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
+import EstadoInstalacion from './EstadoInstalacion';
 
 import OverviewFlow from './Flow';
 
@@ -12,21 +13,22 @@ const connectionStatus = {
 };
 
 const App = () => {
-	const [lectura, setLectura] = React.useState({});
-	const { lastMessage, readyState } = useWebSocket('ws://192.168.0.10:1880/solar');
+	const [estadoInstalacion, setEstadoInstalacion] = React.useState(new EstadoInstalacion({}));
+	const { lastMessage, readyState } = useWebSocket('ws://alamo.local:1880/solar');
 
 	React.useEffect(() => {
 		if (lastMessage !== null) {
 			try {
 				let json = JSON.parse(lastMessage.data)
-				setLectura(json)
+				setEstadoInstalacion(new EstadoInstalacion(json));
 			} catch (e) {
-				console.lor(e)
+				console.log(e)
 			}
 		}
-	}, [lastMessage, setLectura]);
+	}, [lastMessage, setEstadoInstalacion]);
 
-	return <OverviewFlow datos={lectura} estadoWebSocket={connectionStatus[readyState]} />
+	if (!estadoInstalacion) return null;
+	return <OverviewFlow estadoInstalacion={estadoInstalacion} estadoWebSocket={connectionStatus[readyState]} />
 }
 
 export default App;

@@ -10,9 +10,11 @@ import { grey, yellow } from '@mui/material/colors';
 import SolarPowerIcon from '@mui/icons-material/SolarPower';
 import ModeNightIcon from '@mui/icons-material/ModeNight';
 
-export default React.memo(({ data }) => {
+export default React.memo(({ data: estado }) => {
 
-	let avatar = (data['ac1.a'] > 0) ?
+	let mppt = estado.inversor.mppt(1);
+
+	let avatar = (mppt.intensidad > 0) ?
 		< Avatar sx={{ bgcolor: yellow[800], width: 30, height: 30 }} >
 			< SolarPowerIcon sx={{ width: 18}} />
 		</Avatar > :
@@ -30,10 +32,10 @@ export default React.memo(({ data }) => {
 				/>
 				<CardContent sx={{ p: 1, pt: 0 }}>
 					<Typography variant="body1" component="div" color="text.primary">
-						{data['potenciaPlacas']} W
+						{estado.inversor.potenciaPlacas} W
 					</Typography>
 					<Typography variant="body2" component="div" color="text.secondary">
-						{data['ac1.a']} A • {data['ac1.v']} V<br />
+						{mppt.intensidad} A • {mppt.voltaje} V<br />
 					</Typography>
 				</CardContent>
 				<CardContent sx={{ display: 'none' }} />

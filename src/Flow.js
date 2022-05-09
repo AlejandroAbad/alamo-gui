@@ -21,10 +21,13 @@ const nodeTypes = {
 
 
 
-const OverviewFlow = ({ datos, estadoConexion }) => {
+const OverviewFlow = ({ estadoInstalacion, estadoConexion }) => {
 
-	let nodos = React.useMemo(() => generarNodos({ datos }), [datos]);
-	let aristas = React.useMemo(() => generarAristas({ datos }), [datos]);
+
+	let nodos = React.useMemo(() => generarNodos({ estadoInstalacion }), [estadoInstalacion]);
+	let aristas = React.useMemo(() => generarAristas({ estadoInstalacion }), [estadoInstalacion]);
+
+
 
 
 	return (
