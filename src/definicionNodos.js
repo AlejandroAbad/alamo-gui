@@ -2,9 +2,9 @@ import { grey, red, green, blue, yellow } from '@mui/material/colors';
 
 
 
-export const generarNodos = ({ estadoInstalacion }) => {
+export const generarNodos = ({ estadoInstalacion, estadoConsumos }) => {
 
-	return [
+	let nodosInstalacion = [
 		{
 			id: 'solar',
 			type: 'solar',
@@ -37,17 +37,28 @@ export const generarNodos = ({ estadoInstalacion }) => {
 			position: { x: 750, y: 160 },
 		},
 	];
+
+	let nodosConsumo = estadoConsumos?.dispositivos.map((dispositivo, i) => {
+		return {
+			id: `consumo_${dispositivo.id}`,
+			type: 'dispositivoConsumo',
+			data: dispositivo,
+			position: { x: 640, y: (350 + i * 50) },
+		}
+	}) || []
+
+	return [...nodosInstalacion, ...nodosConsumo];
 }
 
 const ESTILO_ARISTA_INACTIVA = { stroke: grey[200], strokeWidth: '2' };
-export const generarAristas = ({ estadoInstalacion }) => {
-	
+export const generarAristas = ({ estadoInstalacion, estadoConsumos }) => {
+
 	let placasActivas = estadoInstalacion.inversor.tienePlacasActivas();
 	let inversorGenerando = estadoInstalacion.inversor.estaGenerando();
 	let estaExportando = estadoInstalacion.red.estaExportando();
 	let estaImportando = estadoInstalacion.red.estaImportando();
 
-	return [
+	let aristasInstalacion = [
 		{
 			id: 'eGeneracion',
 			source: 'solar',
@@ -97,6 +108,24 @@ export const generarAristas = ({ estadoInstalacion }) => {
 				ESTILO_ARISTA_INACTIVA,
 		}
 	]
+
+	let aristasConsumo = estadoConsumos?.dispositivos.map((dispositivo, i) => {
+		let consumiendo = dispositivo.consumo > 0;
+		return {
+			id: `eConsumo_${dispositivo.id}`,
+			source: 'consumos',
+			target: `consumo_${dispositivo.id}`,
+			sourceHandle: 'hConsumoDispositivos',
+			targetHandle: 'hConsumo',
+			// type: 'smoothstep',
+			animated: consumiendo,
+			style: consumiendo ?
+				{ stroke: blue[300], strokeWidth: '2' } :
+				ESTILO_ARISTA_INACTIVA,
+		}
+	}) || []
+
+	return [...aristasInstalacion, ...aristasConsumo]
 }
 
 

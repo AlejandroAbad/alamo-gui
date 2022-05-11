@@ -120,7 +120,7 @@ class EstadoInversor {
 	#temperatura = 0;
 	#codigoEstado = ESTADOS_INVERSOR['desconocido'];
 	#bitmapAlarmas = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
-	#bitmapEstados = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	#bitmapFlags = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
 
 	constructor(datos) {
 		if (!datos) return;
@@ -148,7 +148,7 @@ class EstadoInversor {
 		// BitmapEstados
 		if (datos.bitmapEstadoInversor) {
 			let arrayEstados = JSON.parse(datos.bitmapEstadoInversor);
-			this.#bitmapEstados = arrayEstados.map(decimal => {
+			this.#bitmapFlags = arrayEstados.map(decimal => {
 				return ('0000000000000000' + decimal.toString(2)).slice(-16).split('').reverse().map(b => parseInt(b));
 			})
 		}
@@ -159,7 +159,7 @@ class EstadoInversor {
 			})
 		})
 
-		this.#bitmapEstados.forEach((registro, i) => {
+		this.#bitmapFlags.forEach((registro, i) => {
 			registro.forEach((bit, j) => {
 				if (bit && !bit /*PA QUE NO DE PORCULO*/) console.log(`FLAG ESTADO ${i + 1} BIT ${j}`, FLAGS_INVERSOR[i + 1][j]);
 			})
@@ -204,15 +204,37 @@ class EstadoInversor {
 		return this.#bitmapAlarmas;
 	}
 	get estados() {
-		return this.#bitmapEstados;
+		return this.#bitmapFlags;
 	}
-
-
 	tienePlacasActivas() {
 		return this.#potenciaPlacas > 0;
 	}
 	estaGenerando() {
 		return this.#potenciaGenerada > 0;
+	}
+
+	get listaAlarmas() {
+		let listaAlarmas = [];
+		this.#bitmapAlarmas.forEach( (registro, i) => {
+			registro.forEach( (bit,j) => {
+				if (bit) {
+					listaAlarmas.push(ALARMAS_INVERSOR[i+1][j])
+				}
+			})
+		})
+		return listaAlarmas;
+	}
+
+	get listaFlags() {
+		let listaAlarmas = [];
+		this.#bitmapFlags.forEach((registro, i) => {
+			registro.forEach((bit, j) => {
+				if (bit) {
+					listaAlarmas.push(FLAGS_INVERSOR[i + 1][j])
+				}
+			})
+		})
+		return listaAlarmas;
 	}
 
 }

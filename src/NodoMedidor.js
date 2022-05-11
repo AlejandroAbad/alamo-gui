@@ -37,7 +37,7 @@ export default React.memo(({ data: estado }) => {
 						{estado.red.voltaje} V • {estado.red.frecuencia} Hz
 					</Typography>
 				</CardContent>
-				<CardContent sx={{ p: 1, py: 0 }}>
+				<CardContent sx={{ p: 1, pt: 0 }}>
 					<Typography variant="caption" component="div" color="text.secondary">
 						{Math.round(estado.red.potenciaReactiva * 100) / 100} KVAr ({estado.red.factorPotencia})
 					</Typography>

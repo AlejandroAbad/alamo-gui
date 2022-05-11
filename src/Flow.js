@@ -11,33 +11,42 @@ import NodoMedidor from './NodoMedidor';
 import NodoConsumos from './NodoConsumos';
 import NodoGrid from './NodoGrid';
 import NodoSolar from './NodoSolar';
-const nodeTypes = {
+import NodoDispositivoConsumo from './NodoDispositivoConsumo';
+
+const tiposDeNodo = {
 	inversor: NodoInversor,
 	medidor: NodoMedidor,
 	consumos: NodoConsumos,
 	grid: NodoGrid,
-	solar: NodoSolar
+	solar: NodoSolar,
+	dispositivoConsumo: NodoDispositivoConsumo
+}
+
+const opcionesFlow = {
+	nodesDraggable: false,
+	nodesConnectable: false,
+	elementsSelectable: false,
+	panOnDrag: false,
+	zoomOnScroll: false,
+	zoomOnDoubleClick: false,
+	selectNodesOnDrag: false,
+	connectOnClick: false
 }
 
 
+const OverviewFlow = ({ estadoInstalacion, estadoConsumos, estadoWebSocket }) => {
 
-const OverviewFlow = ({ estadoInstalacion, estadoConexion }) => {
-
-
-	let nodos = React.useMemo(() => generarNodos({ estadoInstalacion }), [estadoInstalacion]);
-	let aristas = React.useMemo(() => generarAristas({ estadoInstalacion }), [estadoInstalacion]);
-
-
-
+	let nodos = React.useMemo(() => generarNodos({ estadoInstalacion, estadoConsumos }), [estadoInstalacion, estadoConsumos]);
+	let aristas = React.useMemo(() => generarAristas({ estadoInstalacion, estadoConsumos }), [estadoInstalacion, estadoConsumos]);
 
 	return (
 		<div style={{ width: 1000, height: 730 }}>
 			<ReactFlow
 				defaultNodes={nodos}
 				defaultEdges={aristas}
-				nodeTypes={nodeTypes}
-			>
-			</ReactFlow>
+				nodeTypes={tiposDeNodo}
+				{...opcionesFlow}
+			/>
 		</div>
 	);
 };

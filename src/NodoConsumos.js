@@ -38,6 +38,12 @@ export default React.memo(({ data: estado }) => {
 				id="hImportacionConsumos"
 				style={{ left: '57%' }}
 			/>
+			<Handle
+				type="source"
+				position="right"
+				id="hConsumoDispositivos"
+				style={{ top: '50%' }}
+			/>
 		</>
 	);
 });

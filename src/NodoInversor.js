@@ -26,7 +26,7 @@ export default React.memo(({ data: estado }) => {
 			/>
 			<Card variant="outlined" sx={{ px: 1, py: 0, minWidth: 175 }}>
 				<CardHeader sx={{ p: 1, pt: 2 }}
-					avatar={<Avatar sx={{ bgcolor: green[300], width: 30, height: 30 }} >
+					avatar={<Avatar sx={{ bgcolor: estado.inversor.colorEstado, width: 30, height: 30 }} >
 						<ElectricBoltIcon sx={{ width: 20 }} />
 					</Avatar>}
 					title={<Typography variant="h6" component="div">Inversor</Typography>}
@@ -44,7 +44,7 @@ export default React.memo(({ data: estado }) => {
 						{estado.inversor.temperatura}ºC | {estado.inversor.textoEstado}
 					</Typography>
 				</CardContent>
-				<CardContent sx={{ p: 1, py: 0 }}>
+				<CardContent sx={{ p: 1, pt: 0 }}>
 					<Typography variant="caption" component="div" color="text.secondary">
 						{estado.inversor.potenciaReactiva} kVAr ({estado.inversor.factorPotencia})
 					</Typography>
