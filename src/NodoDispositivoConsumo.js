@@ -42,6 +42,9 @@ export default React.memo(({ data: dispositivo }) => {
 				{dispositivo.consumo > 0 && <CardContent sx={{ p: 1, py: 0 }}>
 					<Typography variant="caption" component="div" color="text.primary">
 						{dispositivo.consumo} W
+						{dispositivo.voltaje && 
+							<Typography sx={{ fontSize: '80%', pl: 1 }} variant="caption" component="span" color="text.secondary">{dispositivo.voltaje} V</Typography>
+						}
 					</Typography>
 				</CardContent>}
 				<CardContent sx={{ display: 'none' }} />

@@ -6,12 +6,14 @@ class Dispositivo {
 	#encendido = false;
 	#consumo = 0;
 	#esResto = false;
+	#voltaje = null;
 
 	constructor(datos) {
 		this.#id = datos.id;
 		this.#nombre = datos.nombre;
 		this.#encendido = datos.encendido;
 		this.#consumo = datos.consumo;
+		this.#voltaje = datos.voltaje;
 		this.#esResto = Boolean(datos.esResto);
 	}
 
@@ -26,6 +28,9 @@ class Dispositivo {
 	}
 	get consumo() {
 		return this.#consumo;
+	}
+	get voltaje() {
+		return this.#voltaje;
 	}
 	get esResto() {
 		return this.#esResto;
