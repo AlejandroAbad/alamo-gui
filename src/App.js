@@ -18,8 +18,8 @@ const App = () => {
 	const [estadoInstalacion, setEstadoInstalacionSolar] = React.useState(new EstadoInstalacion({}));
 	const estadoConsumos = React.useRef(new EstadoConsumos(0));
 
-	const { lastMessage: datosSolar, readyState: estadoWsSolar } = useWebSocket('ws://alamo.local:1880/solar');
-	const { lastMessage: datosConsumos, readyState: estadoWsConsumos } = useWebSocket('ws://alamo.local:1880/consumos');
+	const { lastMessage: datosSolar, readyState: estadoWsSolar } = useWebSocket('ws://185.103.124.156:8080/ws/solar');
+	const { lastMessage: datosConsumos, readyState: estadoWsConsumos } = useWebSocket('ws://185.103.124.156:8080/ws/consumos');
 
 	React.useEffect(() => {
 		if (datosSolar !== null) {
