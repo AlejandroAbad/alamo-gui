@@ -28,14 +28,8 @@ export const generarNodos = ({ estadoInstalacion, estadoConsumos }) => {
 			id: 'medidor',
 			type: 'medidor',
 			data: estadoInstalacion,
-			position: { x: 530, y: 160 },
-		},
-		{
-			id: 'grid',
-			type: 'grid',
-			data: estadoInstalacion,
-			position: { x: 750, y: 160 },
-		},
+			position: { x: 705, y: 160 },
+		}
 	];
 
 	let nodosConsumo = estadoConsumos?.dispositivos.map((dispositivo, i) => {
@@ -86,7 +80,7 @@ export const generarAristas = ({ estadoInstalacion, estadoConsumos }) => {
 		{
 			id: 'eExportacion',
 			source: 'inversor',
-			target: 'grid',
+			target: 'medidor',
 			sourceHandle: 'hExportacionInversor',
 			targetHandle: 'hExportacionGrid',
 			type: 'smoothstep',
@@ -97,7 +91,7 @@ export const generarAristas = ({ estadoInstalacion, estadoConsumos }) => {
 		},
 		{
 			id: 'eImportacion',
-			source: 'grid',
+			source: 'medidor',
 			target: 'consumos',
 			sourceHandle: 'hImportacionGrid',
 			targetHandle: 'hImportacionConsumos',

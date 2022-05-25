@@ -9,7 +9,6 @@ import { generarNodos, generarAristas } from './definicionNodos';
 import NodoInversor from './NodoInversor';
 import NodoMedidor from './NodoMedidor';
 import NodoConsumos from './NodoConsumos';
-import NodoGrid from './NodoGrid';
 import NodoSolar from './NodoSolar';
 import NodoDispositivoConsumo from './NodoDispositivoConsumo';
 
@@ -17,7 +16,6 @@ const tiposDeNodo = {
 	inversor: NodoInversor,
 	medidor: NodoMedidor,
 	consumos: NodoConsumos,
-	grid: NodoGrid,
 	solar: NodoSolar,
 	dispositivoConsumo: NodoDispositivoConsumo
 }
